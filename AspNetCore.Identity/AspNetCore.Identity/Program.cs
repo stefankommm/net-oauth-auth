@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using AspNetCore.Identity.Database;
 using AspNetCore.Identity.Extensions;
+using AspNetCore.Identity.Services.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Google;
@@ -42,7 +43,12 @@ builder.Services.AddIdentityCore<User>()
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("Database")));
 
+// Services
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddControllers(); // Ensure controllers are added
+
+
+
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddCors(options =>
 {
